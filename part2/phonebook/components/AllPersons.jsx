@@ -2,7 +2,12 @@ import React from 'react';
 import personService from '../services/persons';
 import DeletePerson from './DeletePerson';
 
-export default function AllPersons({ persons, search, setPersons }) {
+export default function AllPersons({
+	persons,
+	search,
+	setPersons,
+	setMessage,
+}) {
 	return (
 		<div>
 			<h2>Numbers</h2>
@@ -26,6 +31,7 @@ export default function AllPersons({ persons, search, setPersons }) {
 									person={person}
 									persons={persons}
 									setPersons={setPersons}
+									setMessage={setMessage}
 								/>
 							</div>
 					  ))}

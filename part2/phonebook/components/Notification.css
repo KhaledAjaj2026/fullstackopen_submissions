@@ -1,0 +1,22 @@
+.notification_window {
+    width: 70vw;
+    height: 100px;
+    margin: 2rem;
+    padding: 10px;
+    font-size: 2rem;
+    border: 5px solid;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success-message {
+    color: #0dba0d;
+    border-color: #0dba0d;
+}
+
+.error-message {
+    color: red;
+    border-color: red;
+}

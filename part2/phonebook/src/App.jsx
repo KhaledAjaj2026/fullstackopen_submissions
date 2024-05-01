@@ -3,6 +3,7 @@ import Filter from '../components/Filter';
 import AllPersons from '../components/AllPersons';
 import AddPerson from '../components/AddPerson';
 import personService from '../services/persons';
+import Notification from '../components/Notification';
 
 const App = () => {
 	useEffect(() => {
@@ -12,10 +13,10 @@ const App = () => {
 	}, []);
 
 	const [persons, setPersons] = useState([]);
-
 	const [newName, setNewName] = useState('');
 	const [newNumber, setNewNumber] = useState('');
 	const [search, setSearch] = useState('');
+	const [message, setMessage] = useState({ type: '', text: '' });
 
 	const handleNewName = (event) => {
 		setNewName(event.target.value);
@@ -45,30 +46,47 @@ const App = () => {
 							setPersons(updatedPersons);
 							setNewName('');
 							setNewNumber('');
+						})
+						.then((res) => {
+							const newMessage = {
+								type: 'success',
+								text: `Changed number for ${newName}`,
+							};
+							setMessage(newMessage);
+							setTimeout(() => {
+								setMessage({ type: '', text: '' });
+							}, 3000);
 						});
 				}
 			} else {
 				const newPerson = { name: newName, number: newNumber };
-				personService.createPerson(newPerson).then((res) => {
-					setPersons(persons.concat(res.data));
-					setNewName('');
-					setNewNumber('');
-				});
+				personService
+					.createPerson(newPerson)
+					.then((res) => {
+						setPersons(persons.concat(res.data));
+						setNewName('');
+						setNewNumber('');
+					})
+					.then((res) => {
+						const newMessage = {
+							type: 'success',
+							text: `Added ${newName}`,
+						};
+						setMessage(newMessage);
+						setTimeout(() => {
+							setMessage({ type: '', text: '' });
+						}, 3000);
+					});
 			}
 		} else {
 			alert('Both name and number are required to enter person');
 		}
 	};
 
-	const handleDeletion = (name, id) => {
-		personService.deletePerson(name, id).then((res) => {
-			console.log(res);
-		});
-	};
-
 	return (
 		<div>
 			<h1>Phonebook</h1>
+			<Notification message={message} setMessage={setMessage} />
 			<Filter search={search} handleSearch={handleSearch} />
 			<AddPerson
 				newName={newName}
@@ -77,7 +95,12 @@ const App = () => {
 				handleNewNumber={handleNewNumber}
 				handleAddName={handleAddName}
 			/>
-			<AllPersons persons={persons} search={search} setPersons={setPersons} />
+			<AllPersons
+				persons={persons}
+				search={search}
+				setPersons={setPersons}
+				setMessage={setMessage}
+			/>
 		</div>
 	);
 };

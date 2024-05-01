@@ -1,6 +1,8 @@
 import React from 'react';
+import personService from '../services/persons';
+import DeletePerson from './DeletePerson';
 
-export default function AllPersons({ persons, search }) {
+export default function AllPersons({ persons, search, setPersons }) {
 	return (
 		<div>
 			<h2>Numbers</h2>
@@ -16,9 +18,16 @@ export default function AllPersons({ persons, search }) {
 							}
 					  })
 					: persons.map((person) => (
-							<li key={person.name}>
-								{person.name} {person.number}
-							</li>
+							<div key={person.name}>
+								<li>
+									{person.name} {person.number}
+								</li>
+								<DeletePerson
+									person={person}
+									persons={persons}
+									setPersons={setPersons}
+								/>
+							</div>
 					  ))}
 			</ul>
 		</div>

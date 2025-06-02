@@ -2,18 +2,22 @@ import { useEffect, useState } from 'react'
 import Persons from './Persons';
 import PersonForm from './PersonForm';
 import Filter from './Filter';
+import axios from 'axios';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]);
+  const [persons, setPersons] = useState([]);
   const [filteredPersons, setFilteredPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [nameSearch, setNameSearch] = useState('');
+
+  // Fetch data from db.json through json-server
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then(res => {
+      setPersons(res.data);
+    });
+  }, []);
+
 
 const handleSubmit = (event) => {
   event.preventDefault();

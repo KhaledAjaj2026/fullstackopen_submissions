@@ -1,6 +1,6 @@
 function PersonForm({newName, handleNameChange, newNumber, handleNumberChange, handleSubmit}) {
     return (
-    <form>
+      <form>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
         </div>

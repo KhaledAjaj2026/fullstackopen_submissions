@@ -1,0 +1,15 @@
+.message-container {
+    margin: 1.2rem;
+    height: 3rem;
+    border: 2px solid green;
+    background-color: #e8e8e8;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-container p {
+    color: green;
+    font-size: 1.5rem;
+}

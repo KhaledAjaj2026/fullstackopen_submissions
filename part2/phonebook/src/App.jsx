@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import Persons from './Persons';
 import PersonForm from './PersonForm';
 import Filter from './Filter';
+import Message from './Message';
 import personService from './directory/persons';
+import './index.css';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -10,6 +12,8 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [nameSearch, setNameSearch] = useState('');
+  const [message, setMessage] = useState(null);
+  // const [error, setError] = useState(null);
 
   // Fetch data from db.json through json-server
   useEffect(() => {
@@ -41,7 +45,12 @@ const App = () => {
           setPersons(persons.map(person => person.name === newName ? res.data : person));
           // Reset state for each field to empty
           setStateToEmpty();
-        })
+          // Temporarily display success message
+          setMessage(`Changed number for ${newName}`);
+          setTimeout(() => {
+            setMessage(null);
+          }, 4000);
+        });
       } else {
         // Reset state for each field to empty
         setStateToEmpty();
@@ -57,6 +66,11 @@ const App = () => {
         setPersons(persons.concat(res.data));
         // Reset state for each field to empty
         setStateToEmpty();
+        // Temporarily display success message
+        setMessage(`Added ${newName}`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 4000);
       });
     }
   }
@@ -65,10 +79,24 @@ const App = () => {
   const handleDelete = id => {
     const personToDelete = persons.find(person => person.id === id);
     if(window.confirm(`Are you sure you want to delete ${personToDelete.name}?`)){
+      // delete person from server
+      personService.deleteItem(id).then(res => {
+        // Temporarily display success message
+        setMessage(`Deleted ${res.data.name}`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 4000);
+      })
+      // // Display error message on failure/error
+      // .catch(err => {
+      //   setError(`Person "${personToDelete.name}" was already removed from the list`);
+      //   console.log(err);
+      //   setTimeout(() => {
+      //     setError(null);
+      //   }, 4000);
+      // });
       // find person with matching id
       const newPersons = persons.filter(person => person.id !== id);
-      // delete person from server
-      personService.deleteItem(id);
       // remove person from list
       setPersons(newPersons);
     }
@@ -101,6 +129,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Message message={message} />
       <Filter nameSearch={nameSearch} handleSearchChange={handleSearchChange}  />
       <h2>Add a New Person</h2>
       <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} handleSubmit={handleSubmit} />

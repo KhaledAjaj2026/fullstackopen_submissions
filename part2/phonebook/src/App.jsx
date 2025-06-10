@@ -3,6 +3,7 @@ import Persons from './Persons';
 import PersonForm from './PersonForm';
 import Filter from './Filter';
 import Message from './Message';
+import ErrorMessage from './ErrorMessage';
 import personService from './directory/persons';
 import './index.css';
 
@@ -13,7 +14,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [nameSearch, setNameSearch] = useState('');
   const [message, setMessage] = useState(null);
-  // const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // Fetch data from db.json through json-server
   useEffect(() => {
@@ -87,14 +88,14 @@ const App = () => {
           setMessage(null);
         }, 4000);
       })
-      // // Display error message on failure/error
-      // .catch(err => {
-      //   setError(`Person "${personToDelete.name}" was already removed from the list`);
-      //   console.log(err);
-      //   setTimeout(() => {
-      //     setError(null);
-      //   }, 4000);
-      // });
+      // Display error message on failure/error
+      .catch(err => {
+        setErrorMessage(`Person "${personToDelete.name}" was already removed from the list`);
+        console.log(err);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 4000);
+      });
       // find person with matching id
       const newPersons = persons.filter(person => person.id !== id);
       // remove person from list
@@ -130,6 +131,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Message message={message} />
+      <ErrorMessage message={errorMessage} />
       <Filter nameSearch={nameSearch} handleSearchChange={handleSearchChange}  />
       <h2>Add a New Person</h2>
       <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} handleSubmit={handleSubmit} />

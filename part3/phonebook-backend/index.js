@@ -1,10 +1,15 @@
 // Introduce Express to the project
 const express = require('express');
+// Introduce Morgan middleware to the project
+const morgan = require('morgan');
 // Apply Express to the var "app"
 const app = express();
 
-// Make the app use the JSON helper for parsing JSON content
+//*** MIDDLEWARE ***//
+// Parse JSON content
 app.use(express.json());
+// HTTP request logger
+app.use(morgan('tiny'));
 
 // List of people to send as JSON data to server
 // (This would normally be the database)
@@ -33,7 +38,7 @@ let people = [
 
 // Get address to which JSON list of people is sent
 app.get('/api/persons', (req, res) => {
-  res.json(people);
+    res.json(people);
 });
 
 // Get total number of persons in database, and show request's date & time

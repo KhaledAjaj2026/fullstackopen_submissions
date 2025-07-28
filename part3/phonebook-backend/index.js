@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(morgan('tiny'));
 // CORS policy
 app.use(cors());
+// Static file hosting capability to Express app
+app.use(express.static('dist'));
 
 // List of people to send as JSON data to server
 // (This would normally be the database)

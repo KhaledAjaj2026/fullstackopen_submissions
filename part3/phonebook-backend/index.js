@@ -4,12 +4,16 @@ const express = require('express');
 const morgan = require('morgan');
 // Apply Express to the var "app"
 const app = express();
+// Introduce CORS policy to the project
+const cors =  require('cors');
 
 //*** MIDDLEWARE ***//
 // Parse JSON content
 app.use(express.json());
 // HTTP request logger
 app.use(morgan('tiny'));
+// CORS policy
+app.use(cors());
 
 // List of people to send as JSON data to server
 // (This would normally be the database)
@@ -111,7 +115,7 @@ app.post('/api/persons', (req, res) => {
 });
 
 // App listens for changes on port 3000
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`app running on port ${PORT}`);
 });

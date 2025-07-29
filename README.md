@@ -10,4 +10,6 @@ Decided to learn full-stack development after delving into frontend for a while.
 
 Below are links to individual sumbissions for each part:
 
-- 
+- [Part 1: Introduction to React](https://github.com/KhaledAjaj2026/fullstackopen_submissions/tree/main/part1)
+- [Part 2: Communicating with Server](https://github.com/KhaledAjaj2026/fullstackopen_submissions/tree/main/part2)
+- [Part 3: Programming a Server with NodeJS and Express](https://github.com/KhaledAjaj2026/fullstackopen_submissions/tree/main/part3)

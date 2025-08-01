@@ -1,7 +1,5 @@
 // Introduce mongoose into project
 const mongoose = require('mongoose');
-// Introduce access to argv helper
-const {argv} = require('node:process')
 // Grab password from process argument
 const password = process.argv[2];
 // Embed password into Mongo cluster URL
@@ -21,11 +19,7 @@ const personSchema = new mongoose.Schema({
 // Create new "Person" model using personSchema
 const Person = mongoose.model('Person', personSchema);
 
-// // Log argv to better understand its behavior
-// argv.forEach(item => {
-//     console.log(item);
-// });
-
+// Handle command line inputs based on length of argv (# of commands input)
 if(process.argv.length == 3) {
     // Fetch all persons from cluster, log to console, then terminate connection
     Person.find({}).then(result => {

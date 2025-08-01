@@ -1,4 +1,4 @@
-# FullStackOpen - Full-Stack Development Course Submissions
+# FullStackOpen || Full-Stack Development Course Submissions
 
 Submissions for my progress through the online course "FullStackOpen."
 
